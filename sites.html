@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#17232B">
+    <title>Egypt Digital Guide</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .sites-page {
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
+
+        .top-bar {
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-family: Georgia, serif;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+        }
+
+        .sites-list {
+            max-width: 760px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(220px, 1fr)
+            );
+            gap: 20px;
+        }
+
+        .site-card {
+            padding: 28px 20px;
+            border: 1px solid currentColor;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .site-name {
+            font-size: 21px;
+            margin: 0 0 18px;
+        }
+
+        .site-status {
+            font-size: 14px;
+            margin-bottom: 18px;
+            opacity: 0.75;
+        }
+
+        .site-link {
+            display: inline-block;
+            padding: 10px 22px;
+            border: 1px solid currentColor;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .site-link.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="sites-page">
+
+    <header class="top-bar">
+        <a class="back-link" id="back-link" href="index.html">
+            ← 返回
+        </a>
+    </header>
+
+    <h1 class="page-title" id="page-title">
+        探索埃及景区
+    </h1>
+
+    <section class="sites-list" id="sites-list">
+        Loading...
+    </section>
+
+</main>
+
+<!-- 全站语言配置 -->
+<script src="/languages/zh.js"></script>
+<script src="/languages/en.js"></script>
+
+<!-- 景区配置 -->
+<script src="/sites/abusimbel/config.js"></script>
+<script src="/sites/philae/config.js"></script>
+<script src="/sites/kingsvalley/config.js"></script>
+
+<script>
+    // 读取用户选择的语言
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const lang = params.get("lang") === "en"
+        ? "en"
+        : "zh";
+
+    const language = window.I18N[lang];
+
+    document.documentElement.lang =
+        lang === "zh" ? "zh-CN" : "en";
+
+    // 页面标题和返回按钮
+    document.getElementById("page-title").textContent =
+        language.home.sitesTitle;
+
+    document.getElementById("back-link").textContent =
+        "← " + language.common.back;
+
+    // 读取所有景区配置
+    const sites = Object.values(
+        window.SITE_CONFIG || {}
+    );
+
+    const list = document.getElementById("sites-list");
+
+    list.innerHTML = "";
+
+    // 生成景区卡片
+    sites.forEach(site => {
+
+        const card = document.createElement("article");
+        card.className = "site-card";
+
+        const name =
+            site.name[lang] || site.name.zh;
+
+        const isAvailable =
+            site.status === "available";
+
+        // 当前接入状态
+        const statusText = isAvailable
+            ? ""
+            : (lang === "zh" ? "接入中" : "Integrating");
+
+        // 景区入口
+        const entryUrl =
+            "/sites/" + site.id + "/" +
+            site.entryFile + "?lang=" + lang;
+
+        card.innerHTML = `
+            <h2 class="site-name">${name}</h2>
+
+            <div class="site-status">
+                ${statusText}
+            </div>
+
+            <a
+                class="site-link ${isAvailable ? "" : "disabled"}"
+                href="${isAvailable ? entryUrl : "#"}"
+                ${isAvailable ? "" : 'aria-disabled="true"'}
+            >
+                ${
+                    isAvailable
+                    ? language.home.enterGuide
+                    : statusText
+                }
+            </a>
+        `;
+
+        list.appendChild(card);
+    });
+</script>
+
+</body>
+</html>
