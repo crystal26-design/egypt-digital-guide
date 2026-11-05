@@ -114,66 +114,59 @@
 <script src="/sites/philae/config.js"></script>
 <script src="/sites/kingsvalley/config.js"></script>
 
+<!-- 加载全站核心模块 -->
+<script src="/core/language.js"></script>
+<script src="/core/site-manager.js"></script>
+<script src="/core/app-context.js"></script>
+
 <script>
-    // 读取用户选择的语言
-    const params = new URLSearchParams(
-        window.location.search
-    );
+    // 初始化页面上下文
+    const context = window.APP_CONTEXT.init();
 
-    const lang = params.get("lang") === "en"
-        ? "en"
-        : "zh";
-
-    const language = window.I18N[lang];
+    // 获取当前语言
+    const lang = context.language;
+    const language = window.APP_LANGUAGE.load();
 
     document.documentElement.lang =
         lang === "zh" ? "zh-CN" : "en";
 
-    // 页面标题和返回按钮
+    // 设置页面标题
     document.getElementById("page-title").textContent =
         language.home.sitesTitle;
 
     document.getElementById("back-link").textContent =
         "← " + language.common.back;
 
-    // 读取所有景区配置
-    const sites = Object.values(
-        window.SITE_CONFIG || {}
-    );
+    // 通过统一景区管理模块获取景区
+    const sites = window.SITE_MANAGER.getAll();
 
     const list = document.getElementById("sites-list");
-
     list.innerHTML = "";
 
     // 生成景区卡片
     sites.forEach(site => {
-
         const card = document.createElement("article");
         card.className = "site-card";
 
-        const name =
-            site.name[lang] || site.name.zh;
+        const name = window.SITE_MANAGER.getName(
+            site.id,
+            lang
+        );
 
         const isAvailable =
-            site.status === "available";
+            window.SITE_MANAGER.isAvailable(site.id);
 
-        // 当前接入状态
         const statusText = isAvailable
             ? ""
             : (lang === "zh" ? "接入中" : "Integrating");
 
-        // 景区入口
         const entryUrl =
             "/sites/" + site.id + "/" +
             site.entryFile + "?lang=" + lang;
 
         card.innerHTML = `
             <h2 class="site-name">${name}</h2>
-
-            <div class="site-status">
-                ${statusText}
-            </div>
-
+            <div class="site-status">${statusText}</div>
             <a
                 class="site-link ${isAvailable ? "" : "disabled"}"
                 href="${isAvailable ? entryUrl : "#"}"
