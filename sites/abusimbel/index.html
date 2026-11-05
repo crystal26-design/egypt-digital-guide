@@ -486,6 +486,7 @@ console.log("当前导览上下文：", APP_CONTEXT_DATA);
         /* ===== 选中点位：底部播放条更新 + 弹出详情层 ===== */
         function selectSpot(id) {
             currentSpotId = id;
+            window.APP_CONTEXT.setSpot(id);
             const s = SPOTS[id];
             if (!s) return;
             document.querySelectorAll(".spot-marker").forEach(el => {
