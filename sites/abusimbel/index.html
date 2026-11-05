@@ -765,9 +765,22 @@ console.log("当前导览上下文：", APP_CONTEXT_DATA);
             input.value = ""; input.disabled = true; btn.disabled = true;
             bubble.innerHTML = "⏳ <i>法老正拨开三千年的风沙，在泥板上翻阅史料...</i>";
 
-            const contextQuestion = currentSpotId !== null
-                ? `当前游客在阿布辛贝神庙：${SPOTS[currentSpotId].cn}（${SPOTS[currentSpotId].en}）。问题是：${question}`
-                : question;
+            // 从统一页面上下文读取当前景区、语言和点位
+const pageContext = window.APP_CONTEXT?.get?.() || {};
+
+const spotId = pageContext.spotId ?? currentSpotId;
+
+const spot = spotId !== null && SPOTS[spotId]
+    ? SPOTS[spotId]
+    : null;
+
+// 组合发送给法老数字导师的上下文
+const contextQuestion = `
+当前景区ID：${pageContext.siteId || "abusimbel"}
+当前语言：${pageContext.language || "zh"}
+${spot ? `当前讲解点位：${spot.cn}（${spot.en}）` : ""}
+游客问题：${question}
+`;
 
             const url = `/api/chat?question=${encodeURIComponent(contextQuestion)}`;
             eventSource = new EventSource(url);
