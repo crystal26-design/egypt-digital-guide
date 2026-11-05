@@ -161,8 +161,9 @@
             : (lang === "zh" ? "接入中" : "Integrating");
 
         const entryUrl =
-            "/sites/" + site.id + "/" +
-            site.entryFile + "?lang=" + lang;
+    "/sites/" + site.id + "/" +
+    site.entryFile + "?lang=" + lang +
+    "&site=" + site.id;
 
         card.innerHTML = `
             <h2 class="site-name">${name}</h2>
