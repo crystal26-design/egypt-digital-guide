@@ -615,11 +615,15 @@ function transcriptHTML(s) {
             }
 
             // 加载音频
-            if (content.audio) {
+           if (content.audio) {
     loadAudio(content.audio);
     playBtn.removeAttribute("disabled");
+    modalPlay.removeAttribute("disabled");
 } else {
+    player.pause();
+    player.removeAttribute("src");
     playBtn.setAttribute("disabled", "disabled");
+    modalPlay.setAttribute("disabled", "disabled");
 }
             modal.classList.add("show");
         }
