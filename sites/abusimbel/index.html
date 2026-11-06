@@ -603,9 +603,9 @@ function transcriptHTML(s) {
 
             // 图片或预留占位
             const frame = document.getElementById("photo-frame");
-            const photo = spotPhotos[id];
+            const photo = s.image;
             if (photo) {
-                frame.innerHTML = `<img src="${photo}" alt="${s.cn}" id="modal-img">`;
+                frame.innerHTML = `<img src="${photo}" alt="${content.name}" id="modal-img">`;
                 const img = document.getElementById("modal-img");
                 img.addEventListener("error", function() {
                     frame.innerHTML = placeholderHTML("图片加载失败，请检查路径：" + photo);
