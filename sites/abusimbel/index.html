@@ -564,9 +564,16 @@ function transcriptHTML(s) {
 }
         /* ===== 详情弹层：图片(或预留位) / 播放条 / 文字 ===== */
         function openModal(id, s) {
-            document.getElementById("modal-title").innerText = `${id}. ${s.cn}`;
-            document.getElementById("modal-sub").innerText = s.en;
-            document.getElementById("modal-transcript").innerHTML = transcriptHTML(s);
+    const content = getSpotContent(id, s);
+
+    document.getElementById("modal-title").innerText =
+        `${id}. ${content.name}`;
+
+    document.getElementById("modal-sub").innerText =
+        content.language === "zh" ? content.subtitle : "";
+
+    document.getElementById("modal-transcript").innerHTML =
+        transcriptHTML(s);
 
             // 图片或预留占位
             const frame = document.getElementById("photo-frame");
