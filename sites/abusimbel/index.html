@@ -589,7 +589,12 @@ function transcriptHTML(s) {
             }
 
             // 加载音频
-            loadAudio(`/audio/spot${String(id).padStart(2, "0")}.mp3`);
+            if (content.audio) {
+    loadAudio(content.audio);
+    playBtn.removeAttribute("disabled");
+} else {
+    playBtn.setAttribute("disabled", "disabled");
+}
             modal.classList.add("show");
         }
 
