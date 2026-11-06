@@ -502,7 +502,33 @@ function getSpotContent(id, spot) {
             15: "/images/spot15.jpg",
             16: "/images/spot16.jpg"
         };
+// 将旧版点位数据统一转换为多语言结构
+Object.entries(SPOTS).forEach(([id, spot]) => {
+    spot.name = {
+        zh: spot.name?.zh || spot.cn || "",
+        en: spot.name?.en || spot.en || ""
+    };
 
+    spot.text = {
+        zh: typeof spot.text === "string"
+            ? spot.text
+            : spot.text?.zh || "",
+        en: typeof spot.text === "object"
+            ? spot.text?.en || ""
+            : ""
+    };
+
+    spot.audio = {
+        zh: typeof spot.audio === "string"
+            ? spot.audio
+            : spot.audio?.zh || `/audio/spot${String(id).padStart(2, "0")}.mp3`,
+        en: typeof spot.audio === "object"
+            ? spot.audio?.en || ""
+            : ""
+    };
+
+    spot.image = spot.image || spotPhotos[id] || "";
+});
         /* ===== 倍速 ===== */
         const SPEEDS = [1.0, 1.5, 2.0, 0.8];
         let speedIdx = 0;
