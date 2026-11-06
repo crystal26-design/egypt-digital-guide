@@ -636,10 +636,11 @@ function transcriptHTML(s) {
         }
 
         function closeModal(event, force) {
-            if (!force && event && event.target !== modal) return;
-            modal.classList.remove("show");
-            player.pause();
-        }
+    if (!force && event && event.target !== modal) return;
+    modal.classList.remove("show");
+    player.pause();
+    setPlayState(false);
+}
 
         document.addEventListener("keydown", e => {
             if (e.key === "Escape" && modal.classList.contains("show")) closeModal(null, true);
