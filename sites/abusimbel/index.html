@@ -477,7 +477,7 @@ function getSpotContent(id, spot) {
         name: language === "en" ? (nameEn || nameZh) : (nameZh || nameEn),
         subtitle: language === "en" ? nameZh : nameEn,
         text: language === "en" ? (textEn || textZh) : (textZh || textEn),
-        audio: language === "en" ? (audioEn || audioZh) : (audioZh || audioEn),
+        audio: language === "en" ? audioEn : audioZh,
         textLanguage: language === "en" && textEn ? "en" : "zh",
         audioLanguage: language === "en" && audioEn ? "en" : "zh"
     };
