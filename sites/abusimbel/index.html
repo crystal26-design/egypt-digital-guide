@@ -515,28 +515,31 @@ function getSpotContent(id, spot) {
         const modalPlay = document.getElementById("modal-play");
         const modal = document.getElementById("spot-modal");
 
-        /* ===== 选中点位：底部播放条更新 + 弹出详情层 ===== */
-        function selectSpot(id) {
-            currentSpotId = id;
-            window.APP_CONTEXT.setSpot(id);
-            const s = SPOTS[id];
-            if (!s) return;
-            document.querySelectorAll(".spot-marker").forEach(el => {
-                el.classList.toggle("active", Number(el.dataset.spot) === id);
-            });
-            // 底部播放条
-            document.getElementById("spot-title").innerText = `🔊 ${id}. ${s.cn}`;
-            document.getElementById("spot-sub").innerText = s.en;
-            playBtn.removeAttribute("disabled");
-            // 弹出详情层
-            openModal(id, s);
-        }
+       /* ===== 选中点位：底部播放条更新 + 弹出详情层 ===== */
+function selectSpot(id) {
+    currentSpotId = id;
+    window.APP_CONTEXT.setSpot(id);
 
-        function transcriptHTML(s) {
-            const paras = s.text.split("\n").filter(x => x.trim());
-            return `<div class="t-title">${s.cn} <span class="t-en">${s.en}</span></div>`
-                 + paras.map(p => `<p>${p}</p>`).join("");
-        }
+    const s = SPOTS[id];
+    if (!s) return;
+
+    const content = getSpotContent(id, s);
+
+    document.querySelectorAll(".spot-marker").forEach(el => {
+        el.classList.toggle("active", Number(el.dataset.spot) === id);
+    });
+
+    // 底部播放条
+    document.getElementById("spot-title").innerText =
+        `🔊 ${id}. ${content.name}`;
+
+   document.getElementById("spot-sub").innerText =
+    content.language === "zh" ? content.subtitle : "";
+    playBtn.removeAttribute("disabled");
+
+    // 弹出详情层
+    openModal(id, s);
+}
 
         /* ===== 详情弹层：图片(或预留位) / 播放条 / 文字 ===== */
         function openModal(id, s) {
