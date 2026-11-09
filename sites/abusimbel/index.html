@@ -617,10 +617,10 @@ function transcriptHTML(s) {
                 frame.innerHTML = `<img src="${photo}" alt="${content.name}" id="modal-img">`;
                 const img = document.getElementById("modal-img");
                 img.addEventListener("error", function() {
-                    frame.innerHTML = placeholderHTML("图片加载失败，请检查路径：" + photo);
+frame.innerHTML = placeholderHTML(GUIDE_TEXT.imageLoadError + "：" + photo);
                 });
             } else {
-                frame.innerHTML = placeholderHTML("以现场实景图为准");
+           frame.innerHTML = placeholderHTML(GUIDE_TEXT.imagePlaceholder);
             }
 
             // 加载音频
