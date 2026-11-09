@@ -27,24 +27,24 @@ window.I18N.en = {
         cancel: "Cancel"
     },
 
-    guide: {
-        title: "Abu Simbel Temples · Digital Audio Guide",
-        mapAlt: "Map of Abu Simbel Temples",
-        mapUnavailable: "Map image unavailable",
-        resetMap: "Reset",
-        selectSpot: "Tap a golden marker on the map to start the guide",
-        play: "Play",
-        pause: "Pause",
-        ask: "Ask",
-        askPlaceholder: "Ask your Egyptian history guide...",
-        imageLoadError: "Image failed to load. Please check the path.",
-        imagePlaceholder: "Refer to the actual site",
-        pharaohPrefix: "Pharaoh's Message",
-        initialGreeting: "Welcome, traveler. Tap a golden marker on the map to hear the stones speak of three thousand years of history. If you have any questions, ask me here...",
-        thinking: "The Pharaoh is brushing away three thousand years of sand and consulting the ancient records...",
-        chatFailed: "The temple's knowledge system is temporarily unavailable. Please ask again later.",
-        networkError: "The Pharaoh is resting in the temple. Please return when your connection is restored."
-    },
+   guide: {
+    title: "Abu Simbel Temples · Digital Audio Guide",
+    mapAlt: "Map of Abu Simbel Temples",
+    mapUnavailable: "Map image unavailable",
+    resetMap: "Reset",
+    selectSpot: "Tap a golden marker on the map to start the guide",
+    play: "Play",
+    pause: "Pause",
+    ask: "Ask",
+    askPlaceholder: "Ask your Egyptian history guide...",
+    imageLoadError: "Image failed to load. Please check the path.",
+    imagePlaceholder: "Refer to the actual site",
+    pharaohPrefix: "Pharaoh's Message",
+    initialGreeting: "Welcome, traveler. Tap a golden marker on the map to hear the stones speak of three thousand years of history. If you have any questions, ask me here...",
+    thinking: "The Pharaoh is brushing away three thousand years of sand and consulting the ancient records...",
+    chatFailed: "The temple's knowledge system is temporarily unavailable. Please ask again later.",
+    networkError: "The Pharaoh is resting in the temple. Please return when your connection is restored."
+},
 
     assistant: {
         name: "Pharaoh Digital Guide",
