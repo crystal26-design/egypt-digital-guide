@@ -381,7 +381,7 @@
             <div class="spot-marker" data-spot="15" style="left:31%; top:37%;" onclick="selectSpot(15)">15</div>
             <div class="spot-marker" data-spot="16" style="left:14%; top:15%;" onclick="selectSpot(16)">16</div>
         </div>
-        <button id="zoom-reset" onclick="resetZoom()" title="复位">⤢</button>
+       <button id="zoom-reset" onclick="resetZoom()" title="复位">⤢</button>
     </div>
 
     <div id="panel-control">
@@ -550,6 +550,8 @@ document.getElementById("spot-title").innerText =
 
 playBtn.innerText = GUIDE_TEXT.play;
 modalPlay.innerText = GUIDE_TEXT.play;
+        document.getElementById("zoom-reset").title =
+    GUIDE_TEXT.resetMap;
        /* ===== 选中点位：底部播放条更新 + 弹出详情层 ===== */
 function selectSpot(id) {
     currentSpotId = id;
