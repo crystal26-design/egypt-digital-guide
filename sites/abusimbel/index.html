@@ -544,7 +544,12 @@ Object.entries(SPOTS).forEach(([id, spot]) => {
         const playBtn = document.getElementById("play-trigger");
         const modalPlay = document.getElementById("modal-play");
         const modal = document.getElementById("spot-modal");
+// 初始化播放条和弹窗按钮的当前语言文字
+document.getElementById("spot-title").innerText =
+    "🔊 " + GUIDE_TEXT.selectSpot;
 
+playBtn.innerText = GUIDE_TEXT.play;
+modalPlay.innerText = GUIDE_TEXT.play;
        /* ===== 选中点位：底部播放条更新 + 弹出详情层 ===== */
 function selectSpot(id) {
     currentSpotId = id;
