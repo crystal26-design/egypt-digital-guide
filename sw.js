@@ -201,7 +201,42 @@ self.addEventListener("fetch", (event) => {
 
   // AI及其他API必须联网，不缓存
   if (url.pathname.startsWith("/api/")) return;
+  // 语言配置和核心模块采用网络优先，断网时使用缓存
+  if (
+    url.pathname.startsWith("/languages/") ||
+    url.pathname.startsWith("/core/")
+  ) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
 
+      try {
+        const response = await fetch(
+          new Request(request, { cache: "no-store" })
+        );
+
+        if (response.ok && response.type === "basic") {
+          await cache.put(request, response.clone());
+        }
+
+        return response;
+
+      } catch (error) {
+        const cached = await cache.match(request);
+
+        return cached || new Response(
+          "语言配置暂时无法加载，请联网后重试。",
+          {
+            status: 503,
+            headers: {
+              "Content-Type": "text/plain; charset=utf-8"
+            }
+          }
+        );
+      }
+    })());
+
+    return;
+  }
   // 8. 网页采用网络优先，断网使用缓存
   if (request.mode === "navigate") {
     event.respondWith((async () => {
