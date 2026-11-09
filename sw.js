@@ -4,7 +4,7 @@
  * AI/API 请求不缓存
  */
 
-const CACHE_NAME = "abusimbel-offline-v3";
+const CACHE_NAME = "abusimbel-offline-v4";
 
 // 1. 网页基础资源
 const CORE_ASSETS = [
