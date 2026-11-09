@@ -33,6 +33,8 @@ window.I18N.zh = {
         ask: "提问",
         askPlaceholder: "向埃及考古讲解员提问...",
         selectSpot: "请点击地图上的金色圆点开启讲解"
+        imageLoadError: "图片加载失败，请检查路径",
+imagePlaceholder: "以现场实景图为准"
     },
 
     assistant: {
