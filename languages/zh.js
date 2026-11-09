@@ -35,6 +35,8 @@ window.I18N.zh = {
         selectSpot: "请点击地图上的金色圆点开启讲解"
         imageLoadError: "图片加载失败，请检查路径",
 imagePlaceholder: "以现场实景图为准"
+resetMap: "复位",
+mapUnavailable: "平面图待放置：images/abusimbel.png"
     },
 
     assistant: {
