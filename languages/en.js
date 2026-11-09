@@ -33,6 +33,8 @@ window.I18N.en = {
         ask: "Ask a Question",
         askPlaceholder: "Ask your Egyptian history guide...",
         selectSpot: "Tap a golden marker on the map to start the guide"
+        imageLoadError: "Image failed to load. Please check the path.",
+imagePlaceholder: "Refer to the actual site"
     },
 
     assistant: {
