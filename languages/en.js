@@ -35,6 +35,8 @@ window.I18N.en = {
         selectSpot: "Tap a golden marker on the map to start the guide"
         imageLoadError: "Image failed to load. Please check the path.",
 imagePlaceholder: "Refer to the actual site"
+resetMap: "Reset",
+mapUnavailable: "Map image unavailable"
     },
 
     assistant: {
