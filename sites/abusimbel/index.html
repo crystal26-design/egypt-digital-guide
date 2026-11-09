@@ -44,17 +44,16 @@
 .map-wrapper {
     position: relative;
     display: block;
-    width: 100%;
-    max-height: 100%;
+    flex: 0 0 auto;
+    min-width: 0;
     min-height: 0;
 }
 
 #hand-drawn-map {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-    object-fit: contain;
     display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
 }
         #hand-drawn-map { width: 100%; height: auto; display: block; }
         .spot-marker {
@@ -728,8 +727,7 @@ frame.innerHTML = placeholderHTML(GUIDE_TEXT.imageLoadError + "：" + photo);
         (function () {
             const mc = document.getElementById("map-container");
             const wrap = mc.querySelector(".map-wrapper");
-            const MIN = 1, MAX = 4;
-
+            const MIN = 0.7, MAX = 4;
             wrap.style.transformOrigin = "0 0";
             wrap.style.willChange = "transform";
 
@@ -753,7 +751,36 @@ frame.innerHTML = placeholderHTML(GUIDE_TEXT.imageLoadError + "：" + photo);
                 else ty = Math.min(-baseY(), Math.max(r.height - h - baseY(), ty));
                 wrap.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
             }
+            
+function fitMap() {
+    const image = wrap.querySelector("#hand-drawn-map");
+    const container = mc.getBoundingClientRect();
 
+    if (!image.naturalWidth || !image.naturalHeight) return;
+    if (!container.width || !container.height) return;
+
+    const ratio = Math.min(
+        container.width / image.naturalWidth,
+        container.height / image.naturalHeight
+    );
+
+    wrap.style.width = `${image.naturalWidth * ratio}px`;
+    wrap.style.height = `${image.naturalHeight * ratio}px`;
+
+    scale = 1;
+    tx = 0;
+    ty = 0;
+
+    apply();
+}
+
+const mapImage = wrap.querySelector("#hand-drawn-map");
+
+mapImage.addEventListener("load", fitMap);
+
+if (mapImage.complete && mapImage.naturalWidth) {
+    fitMap();
+}
             function zoomAt(px, py, factor) {
                 const ns = Math.min(MAX, Math.max(MIN, scale * factor));
                 const k = ns / scale;
@@ -879,7 +906,7 @@ frame.innerHTML = placeholderHTML(GUIDE_TEXT.imageLoadError + "：" + photo);
                 else zoomAt(e.clientX - r.left, e.clientY - r.top, 2.5);
             });
 
-            window.addEventListener("resize", apply);
+           window.addEventListener("resize", fitMap);
         })();
 
         /* ===== 法老密示：AI 问答（SSE） ===== */
